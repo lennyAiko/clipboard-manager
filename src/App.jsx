@@ -23,7 +23,7 @@ function App() {
 
   console.log(data);
   return (
-    <main className="container min-h-screen bg-black/85">
+    <main className="container min-h-screen bg-blue-950">
       <ClearButton onClick={greet} />
 
       <div className="overflow-hidden h-[500px] overflow-y-scroll">

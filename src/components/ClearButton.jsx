@@ -9,7 +9,7 @@ const ClearButton = (props) => {
     <div className="flex justify-end w-full text-white">
       <button
         onClick={() => clear()}
-        className="hover:bg-gray-600 font-medium bg-gray-400 duration-200 transition-all m-2 px-3.5 py-1.5 rounded-lg w-fit"
+        className="hover:bg-blue-600 font-medium bg-blue-700 duration-200 transition-all m-2 px-3.5 py-1.5 rounded-lg w-fit"
       >
         clear all
       </button>
