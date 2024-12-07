@@ -439,6 +439,7 @@ dependencies = [
  "tauri-build",
  "tauri-plugin-clipboard",
  "tauri-plugin-clipboard-manager",
+ "tauri-plugin-fs",
  "tauri-plugin-shell",
 ]
 
@@ -3932,6 +3933,29 @@ dependencies = [
  "tauri",
  "tauri-plugin",
  "thiserror 1.0.69",
+]
+
+[[package]]
+name = "tauri-plugin-fs"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0cdaf6701ee5efc83161cf41004aa5aec4d255c9fb2d2b11fe518fe506acc588"
+dependencies = [
+ "anyhow",
+ "dunce",
+ "glob",
+ "percent-encoding",
+ "schemars",
+ "serde",
+ "serde_json",
+ "serde_repr",
+ "tauri",
+ "tauri-plugin",
+ "tauri-utils",
+ "thiserror 2.0.3",
+ "toml 0.8.2",
+ "url",
+ "uuid",
 ]
 
 [[package]]

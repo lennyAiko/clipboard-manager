@@ -9,6 +9,18 @@
     "core:tray:default",
     "clipboard-manager:allow-clear",
     "clipboard-manager:allow-read-text",
-    "clipboard-manager:allow-read-image"
+    "clipboard-manager:allow-read-image",
+    "fs:allow-app-write-recursive",
+    "fs:allow-app-write",
+    "fs:allow-app-read",
+    "fs:allow-app-read-recursive",
+    {
+      "identifier": "fs:allow-write-file",
+      "allow": [{ "path": "$HOME/data.json" }]
+    },
+    {
+      "identifier": "fs:allow-read-file",
+      "allow": [{ "path": "$HOME/data.json" }]
+    }
   ]
 }
