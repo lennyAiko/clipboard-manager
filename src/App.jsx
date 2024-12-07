@@ -12,9 +12,9 @@ function App() {
 
   const data = useClipboardListener(1000, setItems);
 
-  // useEffect(() => {
-  //   setData([...data, items]);
-  // }, [items]);
+  useEffect(() => {
+    readFile();
+  }, [items]);
 
   async function clearClipboard() {
     setData([]);
@@ -23,14 +23,14 @@ function App() {
 
   // Read file content
   const readFile = async () => {
-    try {
-      const content = await readFile("data.json", {
-        dir: BaseDirectory.Home,
-      });
-      setFileContent(content);
+    const content = await readFile("data.json", {
+      dir: BaseDirectory.Home,
+    });
+    if (!content) {
+      console.log("File does not exist");
+      await writeFile("data.json", "[]", { dir: BaseDirectory.Home });
+    } else {
       console.log("File read successfully:", content);
-    } catch (error) {
-      console.error("Error reading file:", error);
     }
   };
 
