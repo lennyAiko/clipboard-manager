@@ -4,19 +4,24 @@ import ClearButton from "./components/ClearButton";
 import Board from "./components/Board";
 import data from "./utils/data";
 import {
-  writeText,
   readText,
+  readImage,
   clear,
 } from "@tauri-apps/plugin-clipboard-manager";
+import useClipboardListener from "./hooks/useClipboardListener";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const [items, setItems] = useState([]);
+  const [data, setData] = useState([]);
+  useClipboardListener(1000, setItems);
+
+  useEffect(() => {
+    setData([...data, items]);
+  }, [items]);
+
   async function greet() {
-    console.log("greet");
-    await writeText("Tauri is awesome!");
-    // const text = await readText();
-    // console.log(text);
+    const text = await readText();
+    console.log(text);
   }
 
   return (

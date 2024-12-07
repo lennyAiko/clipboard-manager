@@ -8,7 +8,7 @@
     "shell:allow-open",
     "core:tray:default",
     "clipboard-manager:allow-clear",
-    "clipboard-manager:allow-write-text",
-    "clipboard-manager:allow-read-text"
+    "clipboard-manager:allow-read-text",
+    "clipboard-manager:allow-read-image"
   ]
 }

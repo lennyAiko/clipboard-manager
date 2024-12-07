@@ -2,9 +2,9 @@ import React from "react";
 
 const ClearButton = (props) => {
   async function clear() {
-    console.log("clicked");
     await props.onClick();
   }
+
   return (
     <div className="flex justify-end w-full text-white">
       <button
