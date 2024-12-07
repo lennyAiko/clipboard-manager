@@ -1,8 +1,0 @@
-[[set]]
-identifier = "clipboard-access-all"
-description = """ 
-Allows full access to the system clipboard.
-"""
-permissions = [
-    "clipboard-manager:*"
-]
