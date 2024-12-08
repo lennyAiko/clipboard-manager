@@ -7,20 +7,15 @@ import {
   BaseDirectory,
 } from "@tauri-apps/plugin-fs";
 
-const useClipboardListener = (pollInterval = 1000, item = "") => {
-  const [clipboardContent, setClipboardContent] = useState("");
-  const [fileContent, setFileContent] = useState("");
-  const [newContent, setNewContent] = useState("");
-  const [data, setData] = useState([]);
-
+const useClipboardListener = (pollInterval = 1000, item = "", data) => {
   useEffect(() => {
     const checkClipboard = async () => {
       try {
         const content = await readText();
 
-        if (content && !data.find((item) => item === content)) {
+        if (content && content !== "") {
           item(content);
-          setData([...data, content]);
+          // setData([...data, content]);
         }
       } catch (err) {
         console.error("Error reading clipboard:", err);
@@ -32,7 +27,7 @@ const useClipboardListener = (pollInterval = 1000, item = "") => {
     return () => clearInterval(interval); // Cleanup on unmount
   }, [pollInterval]);
 
-  return data;
+  // return data;
 };
 
 export default useClipboardListener;

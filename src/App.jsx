@@ -2,37 +2,37 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import ClearButton from "./components/ClearButton";
 import Board from "./components/Board";
-import data from "./utils/data";
 import { clear } from "@tauri-apps/plugin-clipboard-manager";
 import useClipboardListener from "./hooks/useClipboardListener";
 import { readFile, writeFile, BaseDirectory } from "@tauri-apps/plugin-fs";
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState("");
+  const [clearStorage, setClear] = useState(false);
+  const [data, setData] = useState([]);
 
-  const data = useClipboardListener(1000, setItems);
+  useClipboardListener(1000, setItems, data);
 
   useEffect(() => {
-    readFile();
+    const data = JSON.parse(localStorage.getItem("data")) ?? [];
+    setData(data);
+  }, [clearStorage]);
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("data")) ?? [];
+    data.pop(items);
+    data.push(items);
+    localStorage.setItem("data", JSON.stringify(data));
+    setClear(!clearStorage);
+    // setData((previous) => [...previous, items]);
   }, [items]);
 
   async function clearClipboard() {
-    setData([]);
     await clear();
+    // setData([]);
+    setClear(!clearStorage);
+    localStorage.setItem("data", JSON.stringify([]));
   }
-
-  // Read file content
-  const readFile = async () => {
-    const content = await readFile("data.json", {
-      dir: BaseDirectory.Home,
-    });
-    if (!content) {
-      console.log("File does not exist");
-      await writeFile("data.json", "[]", { dir: BaseDirectory.Home });
-    } else {
-      console.log("File read successfully:", content);
-    }
-  };
 
   return (
     <main className="container min-h-screen bg-blue-950">
