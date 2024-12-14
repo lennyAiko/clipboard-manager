@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import ClearButton from "./components/ClearButton";
 import Board from "./components/Board";
@@ -8,30 +8,27 @@ import { readFile, writeFile, BaseDirectory } from "@tauri-apps/plugin-fs";
 
 function App() {
   const [items, setItems] = useState("");
-  const [clearStorage, setClear] = useState(false);
   const [data, setData] = useState([]);
 
-  useClipboardListener(1000, setItems, data);
+  const dataRef = useRef(data);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("data")) ?? [];
-    setData(data);
-  }, [clearStorage]);
+    dataRef.current = data;
+  }, [data]);
 
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("data")) ?? [];
-    data.pop(items);
-    data.push(items);
-    localStorage.setItem("data", JSON.stringify(data));
-    setClear(!clearStorage);
-    // setData((previous) => [...previous, items]);
-  }, [items]);
+  const handleDataUpdate = (data) => {
+    setData((prev) => {
+      const updatedData = [...prev, data];
+      dataRef.current = updatedData;
+      return updatedData;
+    });
+  };
+
+  useClipboardListener(1000, handleDataUpdate, dataRef.current, data);
 
   async function clearClipboard() {
     await clear();
-    // setData([]);
-    setClear(!clearStorage);
-    localStorage.setItem("data", JSON.stringify([]));
+    setData([]);
   }
 
   return (

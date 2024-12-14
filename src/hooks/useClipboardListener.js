@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import { readText, readImage } from "@tauri-apps/plugin-clipboard-manager";
-import {
-  readTextFile,
-  readFile,
-  writeTextFile,
-  BaseDirectory,
-} from "@tauri-apps/plugin-fs";
 
-const useClipboardListener = (pollInterval = 1000, item = "", data) => {
+const useClipboardListener = (
+  pollInterval = 1000,
+  item = "",
+  dataRef,
+  stuff
+) => {
   useEffect(() => {
     const checkClipboard = async () => {
       try {
         const content = await readText();
 
         if (content && content !== "") {
-          item(content);
-          // setData([...data, content]);
+          const isAdded = dataRef.some((i) => {
+            return i === content;
+          });
+          if (!isAdded) {
+            item(content);
+          }
         }
       } catch (err) {
         console.error("Error reading clipboard:", err);
@@ -25,7 +28,7 @@ const useClipboardListener = (pollInterval = 1000, item = "", data) => {
     const interval = setInterval(checkClipboard, pollInterval);
 
     return () => clearInterval(interval); // Cleanup on unmount
-  }, [pollInterval]);
+  }, [pollInterval, stuff]);
 
   // return data;
 };
